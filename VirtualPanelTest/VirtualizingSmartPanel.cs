@@ -13,7 +13,7 @@ namespace VirtualPanelTest
 
         private static readonly Type s_thisType = typeof(VirtualizingSmartPanel);
 
-        readonly TranslateTransform _transform = new TranslateTransform();
+        //readonly TranslateTransform _transform = new TranslateTransform();
         private int _startIndex;
         private int _endIndex;
         private ItemsControl _itemsOwner;
@@ -26,7 +26,7 @@ namespace VirtualPanelTest
 
         public VirtualizingSmartPanel()
         {
-            RenderTransform = _transform;
+            //RenderTransform = _transform;
             CanVerticallyScroll = false;
             CanHorizontallyScroll = false;
             Loaded += (sender, args) => InvalidateMeasure();
@@ -180,7 +180,7 @@ namespace VirtualPanelTest
                 CurrentPageRect = new Rect(new Point(0, 0), _pageSize);
                 ScrollOwner.InvalidateScrollInfo();
 
-                _transform.X = -1 * HorizontalOffset;
+                //_transform.X = -1 * HorizontalOffset;
             }
         }
 
@@ -301,7 +301,7 @@ namespace VirtualPanelTest
 
             for (int i = 0; i < childCount; i++)
             {
-                double left = column*ItemWidth;
+                double left = column*ItemWidth - HorizontalOffset;
                 double top = row*ItemHeight;
 
                 var arrangeRect = new Rect(left, top, ItemWidth, ItemHeight);
@@ -393,7 +393,7 @@ namespace VirtualPanelTest
                 ScrollOwner.InvalidateScrollInfo();
             }
 
-            _transform.X = -1 * HorizontalOffset;
+            //_transform.X = -1 * HorizontalOffset;
 
             // Force us to realize the correct children
             InvalidateMeasure();
