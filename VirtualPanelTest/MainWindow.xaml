@@ -1,0 +1,56 @@
+﻿<Window x:Class="VirtualPanelTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:virtualPanelTest="clr-namespace:VirtualPanelTest"
+        WindowState="Maximized"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <ListBox ItemsSource="{Binding Items}"
+                 VerticalContentAlignment="Stretch"
+                 HorizontalContentAlignment="Stretch"
+                 SelectionMode="Multiple">
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <virtualPanelTest:VirtualizingSmartPanel
+                                                     AllowPaging="True"
+                                                     ItemHeight="80"
+                                                     ItemWidth="300" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Margin" Value="0,5,5,5" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+                    <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="AliceBlue" BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding}" />
+                            <TextBlock Grid.Row="1" Text="{Binding Path=Tag, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <ListBox.Template>
+                <ControlTemplate>
+                    <ScrollViewer CanContentScroll="True"
+                                  HorizontalScrollBarVisibility="Visible"
+                                  IsDeferredScrollingEnabled="True">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ListBox.Template>
+        </ListBox>
+    </Grid>
+</Window>
